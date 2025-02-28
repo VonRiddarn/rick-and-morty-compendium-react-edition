@@ -1,15 +1,6 @@
-import Header from "../../components/layout/Header/Header";
-import { PageName } from "../PageName";
-
-interface HomeProps {
-	currentPage: PageName;
-	setCurrentPage: (newPage: PageName) => void;
-}
-
-const Home = ({ currentPage, setCurrentPage }: HomeProps) => {
+const Home = () => {
 	return (
 		<>
-			<Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
 			<main>Test</main>
 		</>
 	);

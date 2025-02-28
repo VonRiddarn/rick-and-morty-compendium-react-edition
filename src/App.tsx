@@ -2,6 +2,8 @@ import React from "react";
 import "./App.scss";
 import Home from "./pages/Home/Home";
 import { PageName } from "./pages/PageName";
+import Favorites from "./pages/Favorites/Favorites";
+import Header from "./components/layout/Header/Header";
 
 function App() {
 	const [currentPage, setCurrentPage] = React.useState<PageName>("Home");
@@ -9,9 +11,20 @@ function App() {
 	const renderPage = () => {
 		switch (currentPage) {
 			case "Home":
-				return <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+				return (
+					<>
+						<Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
+						<Home />
+					</>
+				);
 			case "Favorites":
-				return <div>NOT IMPLEMENTED</div>;
+				return (
+					<>
+						<Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
+						<Favorites />
+					</>
+				);
+
 			default:
 				return <div> ERROR </div>;
 		}

@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 
+const cacheRef = new Map<number, string | Error>();
 // TODO: Make this generic later.
 // Right now this will always return characters
-function useFetchCard(id: number) {
-	const [isLoading, setIsLoading] = useState(true);
-	const [data, setData] = useState<string | Error>(""); // TODO: specify type later. Will be Entity OR Error
+function useFetchCard(id: number, forceFetch: boolean) {
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
+		if (cacheRef.has(id) && !forceFetch) {
+			return;
+		}
+
 		const fetchData = async () => {
 			setIsLoading(true);
-			setData("");
 
 			try {
 				const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-
 				const jsonData = await response.json();
 
 				if (!response.ok)
@@ -23,17 +25,18 @@ function useFetchCard(id: number) {
 						}`
 					);
 
-				setData(jsonData.name);
+				cacheRef.set(id, jsonData.name as string); // Euw. Uncertain type stuff. Nasty bnusiness.
 			} catch (error) {
-				setData((error as Error).message);
+				cacheRef.set(id, error as Error);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
 		fetchData();
-	}, [id]);
+	}, [id, forceFetch]);
 
+	const data = cacheRef.get(id) || null;
 	return { data, isLoading };
 }
 

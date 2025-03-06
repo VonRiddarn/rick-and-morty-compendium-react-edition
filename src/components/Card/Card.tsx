@@ -2,10 +2,11 @@ import useFetchCard from "../../hooks/useFetchCard";
 
 type CardProps = {
 	entityId: number;
+	forceFetch?: boolean;
 };
 
-const Card = ({ entityId }: CardProps) => {
-	const { isLoading, data } = useFetchCard(entityId);
+const Card = ({ entityId, forceFetch = false }: CardProps) => {
+	const { isLoading, data } = useFetchCard(entityId, forceFetch);
 
 	return <article className="Card">{renderCard(isLoading, data)}</article>;
 };

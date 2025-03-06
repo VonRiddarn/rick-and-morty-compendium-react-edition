@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // Right now this will always return characters
 function useFetchCard(id: number) {
 	const [isLoading, setIsLoading] = useState(true);
-	const [data, setData] = useState<string | Error>(""); // TODO: specify type later. Will be Entity OR error (as string)
+	const [data, setData] = useState<string | Error>(""); // TODO: specify type later. Will be Entity OR Error
 
 	useEffect(() => {
 		const fetchData = async () => {
